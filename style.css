@@ -18,7 +18,7 @@ body {
 
 /* Header */
 .header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #4c66dc 0%, #4f2876 100%);
     color: white;
     padding: 1rem 0;
     position: sticky;
@@ -55,7 +55,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #e150a7 0%, #6e37a6 100%);
     color: white;
     padding: 100px 20px;
     text-align: center;
@@ -73,7 +73,7 @@ body {
 
 /* Button */
 .btn {
-    background-color: #ff6b6b;
+    background-color: #e44545;
     color: white;
     padding: 12px 30px;
     border: none;
@@ -192,6 +192,11 @@ body {
     flex-direction: column;
     gap: 15px;
 }
+.contact-login{
+    max-width: 500px;
+    margin: 0 auto;
+    font-display: flex;
+}
 
 .contact-form input,
 .contact-form textarea {
@@ -232,3 +237,6 @@ body {
         font-size: 2rem;
     }
 }
+
+
+

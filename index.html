@@ -5,18 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Floricultura Beleza & Flores</title>
     <link rel="stylesheet" href="style.css">
+
+    </style>
 </head>
 <body>
-    <!-Tela de login->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-box">
-            <h2>Login</h2>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <input type="text" placeholder="Usuário" required>
-                <input type="password" placeholder="Senha" required>
-                <button type="submit" class="btn">Entrar</button>
-            </form>
-        </div>
+
     <!-- Header/Navegação -->
     <header class="header">
         <div class="container">
@@ -61,11 +54,14 @@
     <section id="contact" class="contact">
         <div class="container">
             <h2>Entre em Contato</h2>
-            <form class="contact-form" onsubmit="handleSubmit(event)">
+            <form  class="contact-form" onsubmit="handleSubmit(event)">
                 <input type="text" placeholder="Seu Nome" required>
                 <input type="email" placeholder="Seu Email" required>
                 <textarea placeholder="Sua Mensagem" rows="5" required></textarea>
                 <button type="submit" class="btn">Enviar Mensagem</button>
+                 <h3> Não tem uma conta?</h3>
+                <a href="cadastro.html" onclick="switchScreen('signup')" class="text-indigo-600 font-semibold hover:underline">Cadastre-se</a>
+
             </form>
         </div>
     </section>
