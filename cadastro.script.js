@@ -1,6 +1,4 @@
-function
-document.getElementById('loginForm').addEventListener('submit', function(event){})
-
+function cadastro(event) {
     event.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -13,5 +11,4 @@ document.getElementById('loginForm').addEventListener('submit', function(event){
     } else {
         alert('Email ou senha incorretos. Por favor, tente novamente.');
     }
-};
-  
+}
