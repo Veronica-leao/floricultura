@@ -1,4 +1,4 @@
-{function
+function
 document.getElementById('loginForm').addEventListener('submit', function(event){})
 
     event.preventDefault();
@@ -14,5 +14,4 @@ document.getElementById('loginForm').addEventListener('submit', function(event){
         alert('Email ou senha incorretos. Por favor, tente novamente.');
     }
 };
-
-// Array de produtos    
+  
