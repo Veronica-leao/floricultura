@@ -1,4 +1,7 @@
-function login(event) {
+function login(event) { 
+
+document.getElementById('loginForm').addEventListener('submit', function(event){login(event)});
+
     event.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value; 
@@ -8,7 +11,7 @@ function login(event) {
     }
     if (email === 'e-mail@.exemplo.com' && password === 'password123') {
         alert('Login bem-sucedido! Bem-vindo(a) à Floricultura Online!');
-    } else {
+    }   else {
         alert('Email ou senha incorretos. Por favor, tente novamente.');
     }
-}:
+};
