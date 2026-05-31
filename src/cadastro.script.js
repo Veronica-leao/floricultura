@@ -25,3 +25,35 @@ function cadastro(event) {
     alert('Cadastro bem-sucedido! Bem-vindo(a) à Floricultura Online!');
     window.location.href = 'index.html';
 }
+
+const toggleButtons = document.querySelectorAll('.toggle-password');
+const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+const passwordField = document.getElementById('password');
+const confirmPasswordField = document.getElementById('confirmPassword');
+
+function togglePasswordVisibility(event) {
+    const targetId = event.currentTarget.getAttribute('data-target');
+    const input = document.getElementById(targetId);
+    input.type = input.type === 'password' ? 'text' : 'password';
+    event.currentTarget.textContent = input.type === 'password' ? '👁️' : '🙈';
+}
+
+function updatePasswordMatchMessage() {
+    if (!passwordField.value && !confirmPasswordField.value) {
+        passwordMatchMessage.textContent = '';
+        passwordMatchMessage.className = 'match-message';
+        return;
+    }
+
+    if (passwordField.value === confirmPasswordField.value) {
+        passwordMatchMessage.textContent = 'As senhas coincidem.';
+        passwordMatchMessage.className = 'match-message match-ok';
+    } else {
+        passwordMatchMessage.textContent = 'As senhas não coincidem.';
+        passwordMatchMessage.className = 'match-message match-error';
+    }
+}
+
+toggleButtons.forEach(button => button.addEventListener('click', togglePasswordVisibility));
+passwordField.addEventListener('input', updatePasswordMatchMessage);
+confirmPasswordField.addEventListener('input', updatePasswordMatchMessage);

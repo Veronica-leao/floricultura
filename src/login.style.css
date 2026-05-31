@@ -8,6 +8,7 @@ body {
   background: linear-gradient(135deg, #b967f0 0%, #c663da 100%); 
   font-family: 'Segoe UI', sans-serif;
   border-block-width: 8px;color: #ce0b6dce;
+  image-rendering: crisp-edges ;
 }
 .container {
   background: #f8cdda;
@@ -53,6 +54,31 @@ input {
   outline: none;
   transition: border-color 0.3s;
   box-sizing: border-box; 
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 24px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0;
+  width: auto;
+}
+
+.toggle-password:focus {
+  outline: none;
 }
 
 input:focus { border-color: #667eea; }

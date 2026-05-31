@@ -49,8 +49,47 @@ input {
     border-radius: 8px;
     border: 1px solid #ccc;
     outline: none;
+    width: 100%;
 }
 
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field input {
+    padding-right: 44px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 5px;
+}
+
+.toggle-password:focus {
+    outline: none;
+}
+
+.match-message {
+    margin-top: 8px;
+    font-size: 13px;
+    min-height: 18px;
+    text-align: left;
+}
+
+.match-ok {
+    color: #2d8a4d;
+}
+
+.match-error {
+    color: #d63333;
+}
 
 input:focus {
     border-color: #d63384;

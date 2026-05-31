@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="Cadastro.style.css">
 </head>
 <body>
-
+     <a href="login.html"></a>
     <div class="container">
         <h1>🌷 Cadastro</h1>
 
@@ -18,23 +18,30 @@
             <input type="email" id="email" name="email" placeholder="Digite seu email:" required>
             <br>
             <label>Telefone</label>
-            <input type="tel" id="phone" name="phone" placeholder="(00) 00000-0000" required inputmode="numeric" pattern="[0-9]*">
+            <input type="tel"id="phone" name="phone"placeholder="(00) 00000-0000"required inputmode="numeric" pattern="[0-9]*" maxlength="11"oninput=" this.value = this.value.replace(/\D/g, '')">
             <br>
             <label>Endereço</label>
             <input type="text" id="address" name="address" placeholder="Digite seu endereço">
             <br>
             <label>Senha</label>
-            <input type="password" id="password" name="password" placeholder="Crie uma senha" required minlength="8">
+            <div class="password-field">
+                <input type="password" id="password" name="password" placeholder="Crie uma senha" required minlength="8">
+                <button type="button" class="toggle-password" data-target="password" aria-label="Mostrar senha">👁️</button>
+            </div>
             <br>
             <label>Confirmar senha</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirme sua senha" required minlength="8">
-            <br>
+            <div class="password-field">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirme sua senha" required minlength="8">
+                <button type="button" class="toggle-password" data-target="confirmPassword" aria-label="Mostrar confirmação de senha">👁️</button>
+            </div>
+            <div id="passwordMatchMessage" class="match-message"></div>
             <button type="submit">Cadastrar</button>
-             <p>Já tem conta? <a href="login.index.html">Entrar</a></p>
-             <p><a href="index.html">Voltar para Início</a></p>
+             <p>Já tem conta? <a href="login.html">Entrar</a></p>
+             <p><a href="index.html"></a></p>
         </form>
 
     </div>
-<script src="cadastro.script.js"></script>
+   
+ <script src="cadastro.script.js"></script>
 </body>
 </html>

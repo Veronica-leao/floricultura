@@ -21,3 +21,14 @@ function login(event) {
         alert('Email ou senha incorretos. Por favor, tente novamente.');
     }
 }
+
+const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+
+function togglePasswordVisibility(event) {
+    const targetId = event.currentTarget.getAttribute('data-target');
+    const input = document.getElementById(targetId);
+    input.type = input.type === 'password' ? 'text' : 'password';
+    event.currentTarget.textContent = input.type === 'password' ? '👁️' : '🙈';
+}
+
+togglePasswordButtons.forEach(button => button.addEventListener('click', togglePasswordVisibility));
