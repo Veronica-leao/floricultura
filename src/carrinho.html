@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Carrinho - Beleza & Flores</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../carrinho-style.css">
+</head>
+<body>
+
+    <!-- Header/Navegação -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">🌸 Beleza & Flores</div>
+            <nav class="nav">
+                <a href="index.html">Início</a>
+                <a href="carrinho.html" class="active">🛒 Carrinho</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção do Carrinho -->
+    <section class="cart-section">
+        <div class="container">
+            <h1>Meu Carrinho de Compras</h1>
+            
+            <div class="cart-container">
+                <!-- Tabela do Carrinho -->
+                <div class="cart-table-wrapper">
+                    <table class="cart-table" id="cartTable">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Preço Unitário</th>
+                                <th>Quantidade</th>
+                                <th>Total</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartItems">
+                            <!-- Itens do carrinho serão adicionados aqui -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Resumo do Carrinho -->
+                <div class="cart-summary">
+                    <h2>Resumo do Pedido</h2>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">R$ 0,00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Taxa de Entrega:</span>
+                        <span id="shipping">R$ 10,00</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total:</span>
+                        <span id="total">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="cart-actions">
+                        <button class="btn btn-checkout">Finalizar Compra</button>
+                        <button class="btn btn-continue" onclick="window.location.href='index.html#products'">Continuar Comprando</button>
+                        <button class="btn btn-clear" onclick="clearCart()">Limpar Carrinho</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mensagem de carrinho vazio -->
+            <div class="empty-cart" id="emptyCart" style="display: none;">
+                <p>Seu carrinho está vazio! 😢</p>
+                <button class="btn" onclick="window.location.href='index.html#products'">Voltar aos Produtos</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Beleza & Flores. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="../carrinho-script.js"></script>
+</body>
+</html>
