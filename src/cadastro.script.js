@@ -12,6 +12,11 @@ function cadastro(event) {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
 
+    if (!email || !password || !confirmPassword) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+    }
+
     if (password.length < 8) {
         alert('A senha deve ter pelo menos 8 caracteres.');
         return;
@@ -22,8 +27,15 @@ function cadastro(event) {
         return;
     }
 
+    if (!apenasNumeros) {
+        alert('Telefone inválido. Use apenas números (10 ou 11 dígitos).');
+        return;
+    }
+
+    // Salvando email e senha no localStorage
+    localStorage.setItem(email, password);
     alert('Cadastro bem-sucedido! Bem-vindo(a) à Floricultura Online!');
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
 }
 
 const toggleButtons = document.querySelectorAll('.toggle-password');

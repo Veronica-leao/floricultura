@@ -9,18 +9,27 @@ function login(event) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
+    if (!email || !password) {
+        alert('Por favor, preencha email e senha.');
+        return;
+    }
+
     if (password.length < 8) {
         alert('A senha deve ter pelo menos 8 caracteres.');
         return;
     }
 
-    if (email === 'user@example.com' && password === 'password123') {
+    // Verificando as credenciais no localStorage
+    const senhaArmazenada = localStorage.getItem(email);
+    if (senhaArmazenada === password) {
         alert('Login bem-sucedido! Bem-vindo(a) à Floricultura Online!');
         window.location.href = 'index.html';
+    } else if (senhaArmazenada === null) {
+        alert('Email não cadastrado. Por favor, realize o cadastro primeiro.');
     } else {
         alert('Email ou senha incorretos. Por favor, tente novamente.');
     }
-}
+}  
 
 const togglePasswordButtons = document.querySelectorAll('.toggle-password');
 
