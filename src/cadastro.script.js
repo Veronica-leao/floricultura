@@ -1,51 +1,96 @@
 const cadastroForm = document.getElementById('cadastroForm');
+const fullName = document.getElementById('fullName');
+const phone = document.getElementById('phone');
+const emailField = document.getElementById('email');
+const passwordField = document.getElementById('password');
+const confirmPasswordField = document.getElementById('confirmPassword');
+const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+const validCodes = ['PROMO100', 'WELCOME', 'FLOR2026'];
 
-if (cadastroForm) {
-    cadastroForm.addEventListener('submit', cadastro);
+if (fullName) {
+    fullName.addEventListener('input', function () {
+        this.value = this.value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s'\-]/g, '');
+    });
 }
+function validateName(name) {
+    return /^[A-Za-zÀ-ÖØ-öø-ÿ\s'\-]{2,}$/.test(name.trim());
+}
+function validatePhoneNumber(telefone) {
+    return /^\d{10,11}$/.test(telefone);
+}
+function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+function validateCode(code) {
+    if (!code) return true;
+    const patternOk = /^[A-Za-z0-9\-]{3,20}$/.test(code);
+    const inList = validCodes.length === 0 || validCodes.includes(code);
+    return patternOk && inList;
+}
+if (cadastroForm) {
+    cadastroForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-function cadastro(event) {
-    event.preventDefault();
-    const telefone = document.getElementById('phone').value;
-    const apenasNumeros = /^\d{10,11}$/.test(telefone);
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+        const nameVal = fullName ? fullName.value : '';
+        const phoneVal = phone ? phone.value.replace(/\D/g, '') : '';
+        const emailVal = emailField ? emailField.value : '';
+        const passwordVal = passwordField ? passwordField.value : '';
+        const confirmPasswordVal = confirmPasswordField ? confirmPasswordField.value : '';
+        const codeField = document.getElementById('code');
+        const codeVal = codeField ? codeField.value.trim() : '';
 
-    if (!email || !password || !confirmPassword) {
-        alert('Por favor, preencha todos os campos.');
-        return;
-    }
+        if (!validateName(nameVal)) {
+            alert('Nome inválido. Use apenas letras e espaço (mínimo 2 caracteres).');
+            fullName && fullName.focus();
+            return;
+        }
 
-    if (password.length < 8) {
-        alert('A senha deve ter pelo menos 8 caracteres.');
-        return;
-    }
+        if (!validateEmail(emailVal)) {
+            alert('Email inválido. Verifique o formato.');
+            emailField && emailField.focus();
+            return;
+        }
 
-    if (password !== confirmPassword) {
-        alert('As senhas não coincidem. Por favor, verifique.');
-        return;
-    }
+        if (!validatePhoneNumber(phoneVal)) {
+            alert('Telefone inválido. Use apenas números (10 ou 11 dígitos).');
+            phone && phone.focus();
+            return;
+        }
 
-    if (!apenasNumeros) {
-        alert('Telefone inválido. Use apenas números (10 ou 11 dígitos).');
-        return;
-    }
+        if (!passwordVal || !confirmPasswordVal) {
+            alert('Preencha a senha e a confirmação.');
+            return;
+        }
 
-    // Salvando email e senha no localStorage
-    localStorage.setItem(email, password);
-    alert('Cadastro bem-sucedido! Bem-vindo(a) à Floricultura Online!');
-    window.location.href = 'login.html';
+        if (passwordVal.length < 8) {
+            alert('A senha deve ter pelo menos 8 caracteres.');
+            passwordField && passwordField.focus();
+            return;
+        }
+
+        if (passwordVal !== confirmPasswordVal) {
+            alert('As senhas não coincidem.');
+            return;
+        }
+
+        if (!validateCode(codeVal)) {
+            alert('Código inválido ou não reconhecido.');
+            codeField && codeField.focus();
+            return;
+        }
+
+        localStorage.setItem(emailVal, passwordVal);
+        alert('Cadastro bem-sucedido! Bem-vindo(a) à Floricultura Online!');
+        window.location.href = 'login.html';
+    });
 }
 
 const toggleButtons = document.querySelectorAll('.toggle-password');
-const passwordMatchMessage = document.getElementById('passwordMatchMessage');
-const passwordField = document.getElementById('password');
-const confirmPasswordField = document.getElementById('confirmPassword');
 
 function togglePasswordVisibility(event) {
     const targetId = event.currentTarget.getAttribute('data-target');
     const input = document.getElementById(targetId);
+    if (!input) return;
     input.type = input.type === 'password' ? 'text' : 'password';
     event.currentTarget.textContent = input.type === 'password' ? '👁️' : '🙈';
 }
@@ -67,5 +112,5 @@ function updatePasswordMatchMessage() {
 }
 
 toggleButtons.forEach(button => button.addEventListener('click', togglePasswordVisibility));
-passwordField.addEventListener('input', updatePasswordMatchMessage);
-confirmPasswordField.addEventListener('input', updatePasswordMatchMessage);
+passwordField && passwordField.addEventListener('input', updatePasswordMatchMessage);
+confirmPasswordField && confirmPasswordField.addEventListener('input', updatePasswordMatchMessage);

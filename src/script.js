@@ -1,10 +1,10 @@
-// Array de produtos
 const products = [
     {
         id: 1,
         name: "Rosas Vermelhas",
         description: "Buquê de 12 rosas vermelhas frescas",
         price: "R$ 89,90",
+        priceUnitary: "R$ 8,90",
         image: "../Imagens-flores/Rosas vermelhas.jpg"
     },
     {
@@ -12,6 +12,7 @@ const products = [
         name: "Girassóis Amarelos",
         description: "Arranjo alegre com girassóis naturais",
         price: "R$ 79,90",
+        priceUnitary: "R$ 7,90",
         image: "../Imagens-flores/Girassol amarelo.jpg"
     },
     {
@@ -19,6 +20,7 @@ const products = [
         name: "Orquídeas Roxas",
         description: "Plantas de orquídea roxa em vaso decorativo",
         price: "R$ 129,90",
+        priceUnitary: "R$ 12,90",
         image: "../Imagens-flores/orquidea-roxa.jpg"
     },
     {
@@ -26,6 +28,7 @@ const products = [
         name: "Lírios Brancos",
         description: "Buquê elegante de lírios brancos",
         price: "R$ 99,90",
+        priceUnitary: "R$ 9,90",
         image: "../Imagens-flores/Lirios brancos.jpg"
     },
     {
@@ -33,6 +36,7 @@ const products = [
         name: "Tulipas Coloridas",
         description: "Arranjo variado com tulipas de cores diversas",
         price: "R$ 85,90",
+        priceUnitary: "R$ 8,90",
         image: "../Imagens-flores/tulipas coloridas.jpg"
     },
     {
@@ -40,6 +44,7 @@ const products = [
         name: "Cerejeiras",
         description: "Ramo de cerejeira em flor",
         price: "R$ 110,90",
+        priceUnitary: "R$ 10,90",
         image: "../Imagens-flores/flor-de-cerejeira.jpg"
     }
 ];
@@ -56,8 +61,13 @@ function loadProducts() {
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p>${product.description}</p>
-                <div class="price">${product.price}</div>
-                <button class="btn" onclick="addToCart('${product.name}', '${product.price}')">Adicionar ao Carrinho</button>
+                <div class="price">Preço buquê: ${product.price}</div>
+                <div class="price-unitary">Preço unitário: ${product.priceUnitary}</div>
+                <label>Tipo: <select id="type-select-${product.id}">
+                    <option value="BUQ">Buquê</option>
+                    <option value="UNI">Unidade</option>
+                </select></label>
+                <button class="btn" onclick="addToCart(${product.id})">Adicionar ao Carrinho</button>
             </div>
         `;
         productGrid.appendChild(productCard);
@@ -65,15 +75,23 @@ function loadProducts() {
 }
 
 // Função para adicionar ao carrinho
-function addToCart(productName, price) {
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    const select = document.getElementById(`type-select-${product.id}`);
+    const type = select ? select.value : 'BUQ';
+    const price = type === 'UNI' ? product.priceUnitary : product.price;
+
     const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
     carrinho.push({
-        nome: productName,
+        id: product.id,
+        nome: product.name,
+        tipo: type, // 'BUQ' ou 'UNI'
         preco: price,
         dataAdicao: new Date().toLocaleDateString()
     });
     localStorage.setItem('carrinho', JSON.stringify(carrinho));
-    alert(`✅ ${productName} adicionado ao carrinho!\nPreço: ${price}`);
+    alert(`✅ ${product.name} (${type === 'UNI' ? 'Unidade' : 'Buquê'}) adicionado ao carrinho!\nPreço: ${price}`);
 }
 
 // Função para scroll suave

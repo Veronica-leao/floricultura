@@ -17,12 +17,18 @@ function loadCart() {
     const cartData = JSON.parse(localStorage.getItem('carrinho')) || [];
     
     // Organizar produtos por nome, agrupando quantidades
+    // Agora agrupamos pelo nome + tipo para diferenciar buquê vs unidade
     cart = {};
     cartData.forEach(item => {
-        if (cart[item.nome]) {
-            cart[item.nome].quantity += 1;
+        const type = item.tipo || 'BUQ';
+        const key = `${item.nome}___${type}`;
+        if (cart[key]) {
+            cart[key].quantity += 1;
         } else {
-            cart[item.nome] = {
+            cart[key] = {
+                id: item.id || null,
+                name: item.nome,
+                type: type,
                 price: parsePrice(item.preco),
                 quantity: 1,
                 originalPrice: item.preco
@@ -52,23 +58,24 @@ function renderCart() {
         emptyCart.style.display = 'none';
         document.querySelector('.cart-summary').style.display = 'block';
         
-        items.forEach(productName => {
-            const item = cart[productName];
+        items.forEach(key => {
+            const item = cart[key];
             const itemTotal = item.price * item.quantity;
-            
+
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td><strong>${productName}</strong></td>
+                <td><strong>${item.name}</strong></td>
+                <td>${item.type === 'UNI' ? 'Unidade' : 'Buquê'}</td>
                 <td>${formatPrice(item.price)}</td>
                 <td>
                     <div class="quantity-controls">
-                        <button onclick="decreaseQuantity('${productName}')">−</button>
-                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${productName}', this.value)">
-                        <button onclick="increaseQuantity('${productName}')">+</button>
+                        <button onclick="decreaseQuantity('${key}')">−</button>
+                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${key}', this.value)">
+                        <button onclick="increaseQuantity('${key}')">+</button>
                     </div>
                 </td>
                 <td>${formatPrice(itemTotal)}</td>
-                <td><button class="remove-btn" onclick="removeFromCart('${productName}')">Remover</button></td>
+                <td><button class="remove-btn" onclick="removeFromCart('${key}')">Remover</button></td>
             `;
             cartItemsContainer.appendChild(row);
         });
@@ -78,39 +85,41 @@ function renderCart() {
 }
 
 // Função para aumentar quantidade
-function increaseQuantity(productName) {
-    if (cart[productName]) {
-        cart[productName].quantity += 1;
+function increaseQuantity(productKey) {
+    if (cart[productKey]) {
+        cart[productKey].quantity += 1;
         updateLocalStorage();
         renderCart();
     }
 }
 
 // Função para diminuir quantidade
-function decreaseQuantity(productName) {
-    if (cart[productName] && cart[productName].quantity > 1) {
-        cart[productName].quantity -= 1;
+function decreaseQuantity(productKey) {
+    if (cart[productKey] && cart[productKey].quantity > 1) {
+        cart[productKey].quantity -= 1;
         updateLocalStorage();
         renderCart();
     }
 }
 
 // Função para atualizar quantidade manualmente
-function updateQuantity(productName, newQuantity) {
+function updateQuantity(productKey, newQuantity) {
     newQuantity = parseInt(newQuantity) || 1;
     if (newQuantity < 1) newQuantity = 1;
     
-    if (cart[productName]) {
-        cart[productName].quantity = newQuantity;
+    if (cart[productKey]) {
+        cart[productKey].quantity = newQuantity;
         updateLocalStorage();
         renderCart();
     }
 }
 
 // Função para remover produto do carrinho
-function removeFromCart(productName) {
-    if (confirm(`Deseja remover ${productName} do carrinho?`)) {
-        delete cart[productName];
+function removeFromCart(productKey) {
+    const item = cart[productKey];
+    const displayName = item ? `${item.name} ${item.type === 'UNI' ? '(Unidade)' : '(Buquê)'}` : productKey;
+    if (confirm(`Deseja remover ${displayName} do carrinho?`)) {
+        delete cart[productKey];
         updateLocalStorage();
         renderCart();
         alert('Produto removido do carrinho!');
@@ -120,12 +129,14 @@ function removeFromCart(productName) {
 // Função para atualizar localStorage
 function updateLocalStorage() {
     const cartArray = [];
-    Object.keys(cart).forEach(productName => {
-        const item = cart[productName];
+    Object.keys(cart).forEach(key => {
+        const item = cart[key];
         for (let i = 0; i < item.quantity; i++) {
             cartArray.push({
-                nome: productName,
-                preco: item.originalPrice,
+                id: item.id || null,
+                nome: item.name,
+                tipo: item.type,
+                preco: item.originalPrice || formatPrice(item.price),
                 dataAdicao: new Date().toLocaleDateString()
             });
         }
