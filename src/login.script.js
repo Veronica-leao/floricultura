@@ -22,6 +22,9 @@ function login(event) {
     // Verificando as credenciais no localStorage
     const senhaArmazenada = localStorage.getItem(email);
     if (senhaArmazenada === password) {
+        const nomeUsuario = localStorage.getItem(email + '_name');
+        localStorage.setItem('usuarioLogado', email);
+        localStorage.setItem('nomeUsuarioLogado', nomeUsuario);
         alert('Login bem-sucedido! Bem-vindo(a) à Floricultura Online!');
         window.location.href = 'index.html';
     } else if (senhaArmazenada === null) {

@@ -108,4 +108,36 @@ function handleSubmit(event) {
 }
 
 // Carregar produtos quando a página carrega
-document.addEventListener('DOMContentLoaded', loadProducts);
+document.addEventListener('DOMContentLoaded', function() {
+    loadProducts();
+    verificarUsuarioLogado();
+});
+
+// Função para verificar se o usuário está logado
+function verificarUsuarioLogado() {
+    const nomeUsuario = localStorage.getItem('nomeUsuarioLogado');
+    const usuarioInfo = document.getElementById('usuarioInfo');
+    const nomeUsuarioSpan = document.getElementById('nomeUsuario');
+    const loginBtn = document.getElementById('loginBtn');
+
+    if (nomeUsuario) {
+        // Usuário está logado - mostrar nome e botão de sair
+        nomeUsuarioSpan.textContent = ` ${nomeUsuario}`;
+        usuarioInfo.style.display = 'flex';
+        loginBtn.style.display = 'none';
+    } else {
+        // Usuário não está logado - mostrar botão de login
+        usuarioInfo.style.display = 'none';
+        loginBtn.style.display = 'inline-block';
+    }
+}
+
+// Função para fazer logout
+function logout() {
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('usuarioLogado');
+        localStorage.removeItem('nomeUsuarioLogado');
+        alert('Você saiu com sucesso!');
+        window.location.href = 'index.html';
+    }
+}

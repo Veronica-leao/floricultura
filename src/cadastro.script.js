@@ -80,6 +80,7 @@ if (cadastroForm) {
         }
 
         localStorage.setItem(emailVal, passwordVal);
+        localStorage.setItem(emailVal + '_name', nameVal);
         alert('Cadastro bem-sucedido! Bem-vindo(a) à Floricultura Online!');
         window.location.href = 'login.html';
     });
